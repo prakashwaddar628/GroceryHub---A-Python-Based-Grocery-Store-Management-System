@@ -53,20 +53,4 @@ def delete_products(connection, product_id):
 
 if __name__ == "__main__":
     connection = db_Connect()
-    try:
-        # Add a product
-        new_product_id = insert_into_products(connection, {
-            "name": "Potato",
-            "uom_id": 1,
-            "price_per_unit": 10.0,
-        })
-        # Delete the product
-        delete_product = delete_products(connection, 15)
-
-        # Fetch all products
-        all_products = get_all_products(connection)
-        for product in all_products:
-            print(product)
-
-    finally:
-        connection.close()
+    connection.close()
