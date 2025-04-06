@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 import products_dao
 from sql_connect import db_Connect
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/getProducts', methods=['GET'])
 def get_products():
