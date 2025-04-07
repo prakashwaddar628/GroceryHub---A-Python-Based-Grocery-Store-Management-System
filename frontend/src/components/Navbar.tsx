@@ -13,10 +13,16 @@ export default function Navbar() {
         <div>
           <ul className="flex space-x-4 font-semibold text-lg">
             <li>
-              <Link href="/dashboard" className="text-gray-700 hover:text-green-500">
+              <Link href="/" className="text-gray-700 hover:text-green-500">
                 Home
               </Link>
             </li>
+            <li className="flex space-x-4 font-semibold text-lg">
+              <Link href="/dashboard" className="text-gray-700 hover:text-green-500">
+                Dashboard
+              </Link>
+            </li>
+
             <li>
               <Link
                 href="/products"

@@ -2,19 +2,19 @@
 
 const imageData = [
   {
-    src: "/images/tomato.jpg",
+    src: "/images/apple.png",
     alt: "Tomato",
   },
   {
-    src: "/images/banana.jpg",
+    src: "/images/apple.png",
     alt: "Banana",
   },
   {
-    src: "/images/potato.jpg",
+    src: "/images/apple.png",
     alt: "Potato",
   },
   {
-    src: "/images/apple.jpg",
+    src: "/images/apple.png",
     alt: "Apple",
   },
 ];
