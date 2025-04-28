@@ -24,3 +24,26 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.slide-out-left {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.slide-out-left-active {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-in-right {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.slide-in-right-active {
+  transform: translateX(0);
+  opacity: 1;
+}

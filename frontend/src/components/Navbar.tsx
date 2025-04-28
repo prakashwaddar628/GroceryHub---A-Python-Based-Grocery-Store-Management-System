@@ -3,9 +3,16 @@
 import { GrCart } from "react-icons/gr";
 import { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const router = useRouter();
+
+  const handleSignUp = ()=>{
+    router.push('/login')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +59,7 @@ export default function Navbar() {
         </button>
       </div>
       <div className="flex items-center ml-4 space-x-4">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none">
+        <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" onClick={handleSignUp}>
           Sign Up
         </button>
         <GrCart size={32} className="text-white cursor-pointer" />
