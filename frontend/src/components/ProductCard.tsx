@@ -1,51 +1,79 @@
-"use client";
+'use client';
+
 import Image from "next/image";
-import { MdAddShoppingCart } from "react-icons/md";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { PiShoppingCartThin } from "react-icons/pi";
+import { CgBolt } from "react-icons/cg";
+import { cn } from "@/lib/utils";
 
-interface ProductCardProps {
-  id: number;
-  name: string;
-  price: number;
-  uom: string;
-  image?: string;
-}
+const products = [
+    {
+        name: 'Product 1',
+        new_price: 10.99,
+        old_price: 15.99,
+        image: '/images/apple.png',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        quantity: 100,
+        category: 'Category 1',
+        rating: 4.5
+    }
+]
 
-export default function ProductCard({
-  name,
-  price,
-  uom,
-  image = "/placeholder.png",
-}: ProductCardProps) {
-  return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow p-4 w-full max-w-sm">
-      <div className="relative w-full h-40 mb-4 overflow-hidden rounded-xl">
-        <Image
-          src={image}
-          alt={name}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl"
-        />
-      </div>
+const ProductCard = () => {
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+                <Card key={product.name} className="bg-white/5 backdrop-blur-md border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                    <CardHeader>
+                        <div className="relative w-full h-64 overflow-hidden rounded-t-lg">
+                            <Image
+                                src={product.image}
+                                alt={product.name}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                                className="rounded-t-lg"
+                            />
+                        </div>
+                        <CardTitle className="text-lg font-semibold text-black mt-4">{product.name}</CardTitle>
+                        <CardDescription className="text-gray-500 line-clamp-2">{product.description}</CardDescription>
+                    </CardHeader>
 
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-        <span className="text-green-600 font-bold text-md">
-          ₹{price.toFixed(2)} / {uom}
-        </span>
-      </div>
+                    <CardContent>
+                        <div className="flex items-center gap-4">
+                            <span className="text-xl font-bold text-green-600">RS.{product.new_price.toFixed(2)}</span>
+                            {product.old_price && (
+                                <span className="text-gray-400 line-through">RS.{product.old_price.toFixed(2)}</span>
+                            )}
+                        </div>
 
-      <div className="flex justify-between items-center mt-2">
-        <span className="text-sm text-gray-500">Per {uom}</span>
-        <div className="flex items-center gap-2">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition text-sm">
-            View Product
-          </button>
-          <button className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors">
-            <MdAddShoppingCart className="text-xl" />
-          </button>
+                        <div className="mt-2 flex items-center gap-2">
+                            <span className="text-yellow-400">★</span>
+                            <span className="text-sm text-black">{product.rating}</span>
+                        </div>
+                    </CardContent>
+
+                    <CardFooter className="flex flex-col sm:flex-row gap-4">
+                        <Button
+                            className="w-full flex items-center gap-2 bg-yellow-500/50 text-gray-600
+                                       hover:bg-yellow-500/30 hover:text-gray-600 border-yellow-500/30"
+                        >
+                            <PiShoppingCartThin className="w-4 h-4" />
+                            Add to Cart
+                        </Button>
+                        <Button
+                            className="w-full flex items-center gap-2 bg-green-500/30 text-green-600
+                                       hover:bg-green-500/30 hover:text-green-200 border-green-500/30"
+                        >
+                            <CgBolt className="w-4 h-4" />
+                            Buy Now
+                        </Button>
+                    </CardFooter>
+                </Card>
+            ))}
         </div>
-      </div>
-    </div>
-  );
+    )
 }
+
+export default ProductCard;

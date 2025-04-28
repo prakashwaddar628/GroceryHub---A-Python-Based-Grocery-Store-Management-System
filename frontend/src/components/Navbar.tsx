@@ -1,54 +1,61 @@
 "use client";
-import Link from "next/link";
-import { RxAvatar } from "react-icons/rx";
+
+import { GrCart } from "react-icons/gr";
+import { useState, useEffect } from "react";
+import { MdSearch } from "react-icons/md";
 
 export default function Navbar() {
-  return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-2 py-4 flex items-center justify-between">
-        <div className="text-black font-semibold text-2xl flex items-center">
-          <span className="text-green-500 font-bold">G</span>rocery
-          <span className="text-fuchsia-800 font-bold">HUB</span>
-        </div>
-        <div>
-          <ul className="flex space-x-4 font-semibold text-lg">
-            <li>
-              <Link href="/" className="text-gray-700 hover:text-green-500">
-                Home
-              </Link>
-            </li>
-            <li className="flex space-x-4 font-semibold text-lg">
-              <Link href="/dashboard" className="text-gray-700 hover:text-green-500">
-                Dashboard
-              </Link>
-            </li>
+  const [isScrolled, setIsScrolled] = useState(false);
 
-            <li>
-              <Link
-                href="/products"
-                className="text-gray-700 hover:text-green-500"
-              >
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className="text-gray-700 hover:text-green-500"
-              >
-                About Us
-              </Link>
-            </li>
-            <li className="relative group">
-              <Link
-                href="/profile"
-                className="text-gray-700 hover:text-green-500"
-              >
-                <RxAvatar className="text-3xl" />
-              </Link>
-            </li>
-          </ul>
-        </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <nav
+      className={`min-w-[1280px] px-6 py-4 md:px-20 bg-blue-600 flex items-center justify-between top-0 left-0 w-full z-50 transition-shadow duration-300 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
+      <div className="mr-4">
+        <div className="text-white font-bold text-xl">Logo</div>
+      </div>
+      <div className="mr-2">
+        <select className="w-full px-2 py-2 text-gray-700 focus:outline-none rounded-md bg-gray-100">
+          <option>English</option>
+          <option>हिन्दी</option>
+          <option>ಕನ್ನಡ</option>
+        </select>
+      </div>
+      <div className="rounded-full flex-grow flex items-center">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          className="w-full px-6 py-2 text-gray-700 focus:outline-none rounded-l-full placeholder:text-gray-400 bg-gray-100"
+          placeholder="Search..."
+        />
+        <button className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none rounded-r-full">
+          <MdSearch size={30}/>
+        </button>
+      </div>
+      <div className="flex items-center ml-4 space-x-4">
+        <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none">
+          Sign Up
+        </button>
+        <GrCart size={32} className="text-white cursor-pointer" />
       </div>
     </nav>
   );
