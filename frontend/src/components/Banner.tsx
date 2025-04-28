@@ -2,16 +2,11 @@
 
 import Image from 'next/image';
 
-const items = [
-  {
-    name: 'Summer Sales',
-    describe: 'Get better summer grocery products. UP TO 50% OFF',
-    image: '/images/banner_image.jpg',
-    buttonText: 'SHOP NOW',
-  },
-];
+interface BannerProps {
+  items: { name: string; describe: string; image: string; buttonText: string }[];
+}
 
-export default function Banner() {
+export default function Banner({items}: BannerProps) {
   return (
     <div className="w-full bg-blue-100 py-6 px-8 m-auto">
       <div className="container mx-auto flex space-x-4 overflow-x-hidden">

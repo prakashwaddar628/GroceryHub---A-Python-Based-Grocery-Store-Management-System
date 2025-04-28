@@ -1,0 +1,98 @@
+[
+    {
+      "id": "PROD-001",
+      "name": "Organic Fuji Apples",
+      "description": "Crisp and sweet organic Fuji apples, perfect for snacking or baking.",
+      "image": "/images/products/fuji-apples.jpg",
+      "new_price": 2.99,
+      "old_price": 3.50,
+      "quantity": 50,
+      "category": "Fruits",
+      "rating": 4.8,
+      "reviews": 125
+    },
+    {
+      "id": "PROD-002",
+      "name": "Whole Wheat Bread Loaf",
+      "description": "Freshly baked whole wheat bread loaf, high in fiber and nutrients.",
+      "image": "/images/products/whole-wheat-bread.jpg",
+      "new_price": 3.25,
+      "old_price": null,
+      "quantity": 30,
+      "category": "Bakery",
+      "rating": 4.5,
+      "reviews": 88
+    },
+    {
+      "id": "PROD-003",
+      "name": "Premium Arabica Coffee Beans",
+      "description": "Single-origin Arabica coffee beans with a rich and aromatic flavor.",
+      "image": "/images/products/arabica-beans.jpg",
+      "new_price": 9.99,
+      "old_price": 12.50,
+      "quantity": 20,
+      "category": "Beverages",
+      "rating": 4.9,
+      "reviews": 152
+    },
+    {
+      "id": "PROD-004",
+      "name": "fresh chicken",
+      "description": "Lean and flavorful chicken breast, perfect for grilling or frying.",
+      "image": "/images/products/chicken.jpg",
+      "new_price": 7.75,
+      "old_price": 8.99,
+      "quantity": 40,
+      "category": "Meat & Poultry",
+      "rating": 4.7,
+      "reviews": 95
+    },
+    {
+      "id": "PROD-005",
+      "name": "Fresh Organic Spinach",
+      "description": "Tender and nutritious organic spinach, perfect for salads or cooking.",
+      "image": "/images/products/organic-spinach.jpg",
+      "new_price": 2.49,
+      "old_price": 2.99,
+      "quantity": 60,
+      "category": "Vegetables",
+      "rating": 4.6,
+      "reviews": 70
+    },
+    {
+      "id": "PROD-006",
+      "name": "Artisanal Dark Chocolate Bar",
+      "description": "Rich and decadent dark chocolate bar made with high-quality cocoa beans.",
+      "image": "/images/products/dark-chocolate.jpg",
+      "new_price": 4.50,
+      "old_price": null,
+      "quantity": 25,
+      "category": "Snacks & Sweets",
+      "rating": 4.9,
+      "reviews": 110
+    },
+    {
+      "id": "PROD-007",
+      "name": "Free-Range Chicken Eggs (Dozen)",
+      "description": "A dozen fresh, free-range chicken eggs with rich yolks.",
+      "image": "/images/products/free-range-eggs.jpg",
+      "new_price": 3.99,
+      "old_price": 4.25,
+      "quantity": 35,
+      "category": "Dairy & Eggs",
+      "rating": 4.7,
+      "reviews": 82
+    },
+    {
+      "id": "PROD-008",
+      "name": "Long Grain White Rice (1kg)",
+      "description": "High-quality long grain white rice, perfect for various dishes.",
+      "image": "/images/products/white-rice.jpg",
+      "new_price": 2.75,
+      "old_price": null,
+      "quantity": 100,
+      "category": "Pantry Staples",
+      "rating": 4.4,
+      "reviews": 65
+    }
+  ]
