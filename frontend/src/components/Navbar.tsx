@@ -4,15 +4,26 @@ import { GrCart } from "react-icons/gr";
 import { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { IoMdContact } from "react-icons/io";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleSignUp = ()=>{
-    router.push('/login')
-  }
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, []);
+  const handleSearch = () => {
+    if (searchQuery) {
+      router.push(`/search?query=${searchQuery}`);
+    }
+  };
+
+  const handleSignUp = () => {
+    router.push("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,10 +48,15 @@ export default function Navbar() {
       }`}
     >
       <div className="mr-4">
-        <div className="text-white font-bold text-xl">Logo</div>
+        <div
+          className="text-white font-bold text-xl cursor-pointer"
+          onClick={() => router.push("/")}
+        >
+          Logo
+        </div>
       </div>
       <div className="mr-2">
-        <select className="w-full px-2 py-2 text-gray-700 focus:outline-none rounded-md bg-gray-100">
+        <select className="w-full px-2 py-2 text-gray-700 focus:outline-none rounded-md bg-gray-100 cursor-pointer">
           <option>English</option>
           <option>हिन्दी</option>
           <option>ಕನ್ನಡ</option>
@@ -53,15 +69,30 @@ export default function Navbar() {
           id="search"
           className="w-full px-6 py-2 text-gray-700 focus:outline-none rounded-l-full placeholder:text-gray-400 bg-gray-100"
           placeholder="Search..."
+          value={searchQuery}
+          onChange={(e)=> setSearchQuery(e.target.value)  }
         />
-        <button className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none rounded-r-full">
-          <MdSearch size={30}/>
+        <button className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none rounded-r-full cursor-pointer" onClick={handleSearch}>
+          <MdSearch size={30} />
         </button>
       </div>
       <div className="flex items-center ml-4 space-x-4">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" onClick={handleSignUp}>
-          Sign Up
-        </button>
+        {isLoggedIn ? (
+          <div
+            className="flex items-center space-x-4 cursor-pointer"
+            onClick={() => router.push("/profile")}
+          >
+            <IoMdContact size={40} />
+          </div>
+        ) : (
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none"
+            onClick={handleSignUp}
+          >
+            Sign Up
+          </button>
+        )}
+
         <GrCart size={32} className="text-white cursor-pointer" />
       </div>
     </nav>

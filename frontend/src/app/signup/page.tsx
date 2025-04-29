@@ -1,14 +1,16 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function SignUp() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
-  const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,12 +31,18 @@ export default function SignUp() {
       return;
     }
 
+    const validPassword=()=>{
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      return regex.test(password);
+    }
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    console.log("Sign Up Data:", { name, username, password, cnfPassword, phone });
+    console.log("Sign Up Data:", { name, username, password, cnfPassword });
     alert("Sign Up Successful! (Simulated)");
     setIsLoading(false);
+    router.push("/login");
     // In a real app, you'd likely redirect the user
   };
 
@@ -113,18 +121,6 @@ export default function SignUp() {
               value={cnfPassword}
               onChange={(e) => setCnfPassword(e.target.value)}
               required
-            />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">
-              Phone Number (Optional):
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              className="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__pulse animate__delay-400ms"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <button

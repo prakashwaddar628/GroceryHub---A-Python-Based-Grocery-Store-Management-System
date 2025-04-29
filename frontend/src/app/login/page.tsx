@@ -23,8 +23,6 @@ export default function Login() {
       return;
     }
 
-    // --- Replace this with actual authentication logic ---
-    // Simulate an API call with a slight delay for demonstration
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     if (username === "testuser" && password === "password") {
