@@ -1,0 +1,40 @@
+[
+    {
+      "name": "Alice Smith",
+      "email": "alice.smith@example.com",
+      "phone": "987-654-3210",
+      "gender": "female",
+      "address": "456 Oak Avenue, Springfield, USA",
+      "orders": [
+        {
+          "orderId": "OD78901",
+          "date": "2025-05-01",
+          "total": 120.50,
+          "items": ["Laptop x1", "Mouse x1"]
+        },
+        {
+          "orderId": "OD23456",
+          "date": "2025-04-28",
+          "total": 75.00,
+          "items": ["Keyboard x1", "USB Hub x1"]
+        },
+        {
+          "orderId": "OD56789",
+          "date": "2025-04-20",
+          "total": 25.99,
+          "items": ["Webcam x1"]
+        }
+      ],
+      "totalSpent": 221.49,
+      "recentOrders": [
+        {
+          "orderId": "OD78901",
+          "date": "2025-05-01",
+          "total": 120.50,
+          "items": ["Laptop x1", "Mouse x1"]
+        }
+      ],
+      "image": "/images/prakash.jpg"
+    }
+  ]
+  
