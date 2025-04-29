@@ -13,8 +13,9 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(true);
+    setIsLoggedIn(Boolean(localStorage.getItem("authToken")));
   }, []);
+
   const handleSearch = () => {
     if (searchQuery) {
       router.push(`/search?query=${searchQuery}`);
@@ -93,7 +94,7 @@ export default function Navbar() {
           </button>
         )}
 
-        <GrCart size={32} className="text-white cursor-pointer" />
+        <GrCart size={32} className="text-white cursor-pointer" onClick={()=>router.push('/cart')}/>
       </div>
     </nav>
   );
