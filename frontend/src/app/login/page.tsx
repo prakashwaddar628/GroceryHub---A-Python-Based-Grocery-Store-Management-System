@@ -1,5 +1,7 @@
 "use client";
 
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -38,8 +40,10 @@ export default function Login() {
   };
 
   return (
+    <>
+    <Navbar />
     <div
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-200 to-blue-300 "
+      className="min-h-[585px] flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-200 to-blue-300 "
       style={{
         backgroundImage: "url('/images/bg_image.jpg')",
         backgroundSize: "cover",
@@ -140,5 +144,7 @@ export default function Login() {
         </p>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
