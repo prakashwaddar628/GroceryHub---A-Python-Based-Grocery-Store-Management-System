@@ -6,18 +6,20 @@ import { Button } from "./ui/button";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { CgBolt } from "react-icons/cg";
 import { Product } from "@/types/product";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   products: Product[];
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ products }) => {
+  const router = useRouter();
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {products.map((product) => (
-        <Card key={product.id} className="bg-white/5 backdrop-blur-md border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+        <Card key={product.id} className="bg-white backdrop-blur-md border border-white/10 shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" onClick={()=>router.push(`/product/${product.id}`)}>
           <CardHeader>
-            <div className="relative w-full h-64 overflow-hidden rounded-t-lg">
+            <div className="relative w-full h-64 overflow-hidden rounded-4xl shadow-2xl">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -46,15 +48,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ products }) => {
 
           <CardFooter className="flex flex-col sm:flex-row gap-4">
             <Button
-              className="w-full flex items-center gap-2 bg-yellow-500/50 text-gray-600
+              className="w-full flex items-center shadow-xl hover:py-2 gap-2 bg-yellow-500/50 text-gray-600
                         hover:bg-yellow-500/30 hover:text-gray-600 border-yellow-500/30"
             >
               <PiShoppingCartThin className="w-4 h-4" />
               Add to Cart
             </Button>
             <Button
-              className="w-full flex items-center gap-2 bg-green-500/30 text-green-600
-                        hover:bg-green-500/30 hover:text-green-200 border-green-500/30"
+              className="w-full flex items-center gap-2 hover:py-2 bg-green-500/30 text-green-600
+                        hover:bg-green-500/30 border-green-500/30"
             >
               <CgBolt className="w-4 h-4" />
               Buy Now

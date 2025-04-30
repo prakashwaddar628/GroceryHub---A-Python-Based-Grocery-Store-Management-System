@@ -4,38 +4,26 @@ import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { CartItem } from '@/types/cart';
+import cart from '@/data/cartData.json';
 
 export default function Cart() {
   const router = useRouter();
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: '1',
-      name: 'Awesome T-Shirt',
-      price: 2599,
-      quantity: 1,
-      image: '/images/products/fuji-apples.jpg',
-    },
-    {
-      id: '2',
-      name: 'Cool Coffee Mug',
-      price: 1250,
-      quantity: 1,
-      image: '/images/products/fuji-apples.jpg',
-    },
-  ]);
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>(cart); // Initialize state with imported cart JSON
 
   useEffect(() => {
-    setIsLoggedIn(Boolean(localStorage.getItem('token')));
+    const token = localStorage.getItem('authToken');
+    const loggedIn = Boolean(token);
+    setIsLoggedIn(loggedIn);
+    if (loggedIn) {
+      setCartItems(cart);
+    } else {
+      setCartItems([]);
+    }
   }, []);
+  
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const discount = Math.floor(total * 0.2);
@@ -62,7 +50,7 @@ export default function Cart() {
         </h1>
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16">
+          <div className="flex flex-col items-center justify-center py-16 bg-white">
             <Image
               src="/images/empty-cart.svg"
               alt="Empty Cart"

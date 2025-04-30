@@ -1,0 +1,17 @@
+[
+    {
+      "id": "1",
+      "name": "Awesome T-Shirt",
+      "price": 2599,
+      "quantity": 1,
+      "image": "/images/products/fuji-apples.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Cool Coffee Mug",
+      "price": 1250,
+      "quantity": 1,
+      "image": "/images/products/fuji-apples.jpg"
+    }
+  ]
+  

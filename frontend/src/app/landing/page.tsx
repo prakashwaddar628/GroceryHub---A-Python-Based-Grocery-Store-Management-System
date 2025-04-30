@@ -34,28 +34,41 @@ export default function Landing() {
   ];
 
   const bestSellingProducts = productsData.slice(0, 4);
-
   const featuredProducts = productsData.slice(4, 8);
 
   return (
-    <div className="overflow-y-hidden max-w-screen">
+    <div className="overflow-y-hidden max-w-screen bg-gray-50">
       <Banner items={bestSellingBannerItems} />
 
-      <section className="max-w-7xl mx-auto px-0 py-4">
-        <h2 className="text-2xl font-bold mb-6 text-black">Best Selling</h2>
+      {/* Best Selling Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-black">Best Selling</h2>
+          <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-all">
+            Show More
+          </button>
+        </div>
         <ProductCard products={bestSellingProducts} />
       </section>
 
       <Banner items={featuredBannerItems} />
 
-      <section className="max-w-7xl mx-auto px-0 py-4">
-        <h2 className="text-2xl font-bold mb-6 text-black">Featured</h2>
+      {/* Featured Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-black">Featured</h2>
+          <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-all">
+            Show More
+          </button>
+        </div>
         <ProductCard products={featuredProducts} />
       </section>
 
       <Banner items={bottomBannerItems} />
-      
-      <Brands />
+
+      <div className="py-10 bg-white">
+        <Brands />
+      </div>
     </div>
   );
 }
