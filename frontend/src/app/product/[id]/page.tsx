@@ -1,16 +1,21 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { Product } from '@/types/product';
-import products from '@/data/products.json';
+import { useParams, useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/product";
+import products from "@/data/products.json";
+import { useSession } from "next-auth/react";
 
 export default function ProductPage() {
+  const router = useRouter();
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -18,6 +23,34 @@ export default function ProductPage() {
       setProduct(found || null);
     }
   }, [id]);
+
+  const handleAddToCart = () => {
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+
+    console.log(
+      "Product added to cart:",
+      product?.id,
+      "by user:",
+      session?.user?.email
+    );
+    localStorage.setItem(
+      `cart_${product?.id}`,
+      JSON.stringify({ ...product, quantity })
+    );
+    setIsLoading(true);
+  };
+
+  const handleBuynow = () => {
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+    router.push(`/checkout?productId=${product?.id}&quantity=${quantity}`);
+    setIsLoading(true);
+  };
 
   if (!product) {
     return (
@@ -44,15 +77,28 @@ export default function ProductPage() {
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
           <p className="text-gray-600">{product.description}</p>
-          <div className="text-2xl font-bold text-green-600">₹{product.new_price}</div>
+          <div className="text-2xl font-bold text-green-600">
+            ₹{product.new_price}
+          </div>
           {product.old_price && (
-            <div className="line-through text-gray-400">₹{product.old_price}</div>
+            <div className="line-through text-gray-400">
+              ₹{product.old_price}
+            </div>
           )}
           <div className="text-yellow-500">Rating: {product.rating} ★</div>
-          <button className="mt-4 bg-blue-600 shadow-2xl hover:bg-blue-500 text-white px-4 py-2 rounded-2xl">
-            Add to Cart
+          <button
+            className="mt-4 bg-blue-600 shadow-2xl hover:bg-blue-500 text-white px-4 py-2 rounded-2xl"
+            onClick={handleAddToCart}
+          >
+            {isLoading? 'Loading...'  : 'Add to Cart'  }
           </button>
-          <button className="mt-4 bg-yellow-600 shadow-2xl hover:bg-yellow-500 text-white px-4 py-2 rounded-xl"> Buy now</button>
+          <button
+            className="mt-4 bg-yellow-600 shadow-2xl hover:bg-yellow-500 text-white px-4 py-2 rounded-xl"
+            onClick={handleBuynow}
+          >
+            {" "}
+            {isLoading? 'Loading...'  : 'Buy Now'  }
+          </button>
         </div>
       </div>
       <Footer />

@@ -46,22 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ products }) => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col sm:flex-row gap-4">
-            <Button
-              className="w-full flex items-center shadow-xl hover:py-2 gap-2 bg-yellow-500/50 text-gray-600
-                        hover:bg-yellow-500/30 hover:text-gray-600 border-yellow-500/30"
-            >
-              <PiShoppingCartThin className="w-4 h-4" />
-              Add to Cart
-            </Button>
-            <Button
-              className="w-full flex items-center gap-2 hover:py-2 bg-green-500/30 text-green-600
-                        hover:bg-green-500/30 border-green-500/30"
-            >
-              <CgBolt className="w-4 h-4" />
-              Buy Now
-            </Button>
-          </CardFooter>
+          
         </Card>
       ))}
     </div>

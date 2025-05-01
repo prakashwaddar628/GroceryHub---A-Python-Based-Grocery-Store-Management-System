@@ -1,12 +1,15 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface BannerProps {
   items: { name: string; describe: string; image: string; buttonText: string }[];
 }
 
 export default function Banner({items}: BannerProps) {
+  const router = useRouter();
+
   return (
     <div className="w-full bg-blue-100 py-6 px-8 m-auto">
       <div className="container mx-auto flex space-x-4 overflow-x-hidden">
@@ -26,7 +29,7 @@ export default function Banner({items}: BannerProps) {
               <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-end items-center p-4 bg-opacity-60 text-white">
                 <div className="text-4xl text-shadow text-shadow-yellow-300 font-bold mb-2">{item.name}</div>
                 <div className="text-amber-600 font-bold font-serif text-shadow-amber-500 mb-4 text-6xl md:text-4xl">{item.describe}</div>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm md:text-base">
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm md:text-base cursor-pointer" onClick={()=> router.push('/products')}>
                   {item.buttonText}
                 </button>
               </div>

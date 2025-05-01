@@ -11,7 +11,7 @@ export default function Cart() {
   const router = useRouter();
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>(cart); // Initialize state with imported cart JSON
+  const [cartItems, setCartItems] = useState<CartItem[]>(cart);
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');

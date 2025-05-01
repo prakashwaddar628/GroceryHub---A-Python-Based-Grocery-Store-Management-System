@@ -28,7 +28,7 @@ export default function Login() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     if (username === "testuser" && password === "password") {
-      localStorage.setItem("authToken", "groceryStorage");
+      localStorage.getItem("authToken");
       alert("Login Successful");
       console.log(username, password);
       setIsLoading(false);

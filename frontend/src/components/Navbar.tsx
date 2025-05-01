@@ -19,6 +19,7 @@ export default function Navbar() {
   const handleSearch = () => {
     if (searchQuery) {
       router.push(`/search?query=${searchQuery}`);
+      setSearchQuery("");
     }
   };
 

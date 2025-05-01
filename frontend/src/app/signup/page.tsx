@@ -43,7 +43,8 @@ export default function SignUp() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     console.log("Sign Up Data:", { name, username, password, cnfPassword });
-    alert("Sign Up Successful! (Simulated)");
+    alert("Sign Up Successful!");
+    localStorage.setItem("authToken", "groceryStorage");
     setIsLoading(false);
     router.push("/login");
     // In a real app, you'd likely redirect the user
