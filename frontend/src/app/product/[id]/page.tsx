@@ -20,6 +20,7 @@ export default function ProductPage() {
   useEffect(() => {
     if (id) {
       const found = products.find((p) => p.id === id);
+      // setProduct(found || null);
       setProduct(found || null);
     }
   }, [id]);

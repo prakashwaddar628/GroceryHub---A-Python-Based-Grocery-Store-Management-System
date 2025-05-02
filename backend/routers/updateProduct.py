@@ -19,8 +19,8 @@ class Product(BaseModel):
     discount_percentage: Optional[float] = None
     supplier_name: Optional[str] = None
 
-@router.post("/add_products")
-def add_product(product: Product, db: Database = Depends(get_db)):
+@router.post("/update_products")
+def update_product(product: Product, db: Database = Depends(get_db)):
     product_dict = product.dict()
 
     if product.is_discounted and product.discount_percentage is not None:

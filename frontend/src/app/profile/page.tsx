@@ -15,6 +15,7 @@ import { ProfileProps } from "@/types/profile";
 import userData from "@/data/users.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 
 const profileData: ProfileProps = userData[0];
@@ -36,6 +37,8 @@ export default function Profile() {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="bg-gray-100 min-h-screen py-10">
             <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
                 {/* Left Navigation (Similar to the image) */}
@@ -228,6 +231,7 @@ export default function Profile() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

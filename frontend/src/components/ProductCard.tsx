@@ -1,10 +1,8 @@
 'use client';
 
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
-import { PiShoppingCartThin } from "react-icons/pi";
-import { CgBolt } from "react-icons/cg";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
 
