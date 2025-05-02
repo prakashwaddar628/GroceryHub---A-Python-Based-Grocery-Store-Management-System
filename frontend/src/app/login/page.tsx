@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useRouter();
@@ -19,25 +20,36 @@ export default function Login() {
     setIsLoading(true);
     setError(null);
 
-    if (username === "" || password === "") {
+    if (!username || !password) {
       setError("Please fill all fields.");
       setIsLoading(false);
       return;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try{
+      const res = await fetch("http://localhost:5000/login",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
 
-    if (username === "testuser" && password === "password") {
-      localStorage.getItem("authToken");
-      alert("Login Successful");
-      console.log(username, password);
-      setIsLoading(false);
-      router.push("/");
-    } else {
-      setError("Invalid username or password.");
+      });
+      const data = await res.json();
+      if(res.ok){
+        localStorage.setItem("authToken", data.token);
+        toast.success("Login Successful!");
+        router.push("/");
+      }else{
+        setError(data.message || "Invalid credentials.");
+      }
+    }
+    catch(err){
+      setError("An error occurred while trying to login.");
+    }finally{
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <>
