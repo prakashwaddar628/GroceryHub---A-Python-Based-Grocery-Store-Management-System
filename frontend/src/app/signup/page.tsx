@@ -50,11 +50,9 @@ export default function SignUp() {
           }),
         });
 
-        // Log the raw response to debug
         const text = await res.text();
         console.log("Response Text:", text);
 
-        // Check if response is JSON
         let data;
         try {
           data = JSON.parse(text);
@@ -75,6 +73,10 @@ export default function SignUp() {
           localStorage.setItem("authToken", data.token);
         }
 
+        setName("");
+        setUsername("");
+        setPassword("");
+        setCnfPassword("");
         router.push("/login");
       } catch (error: any) {
         setError(error.message || "An error occurred.");

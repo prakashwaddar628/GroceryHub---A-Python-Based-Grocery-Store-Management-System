@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import login, signup, addProduct, getProduct, updateProduct
+from routers import login, signup, addProduct, getProduct, updateProduct, getUser
 
 app = FastAPI()
 
@@ -19,6 +19,7 @@ app.include_router(signup.router)
 app.include_router(addProduct.router)
 app.include_router(getProduct.router)
 app.include_router(updateProduct.router)
+app.include_router(getUser.router)
 
 @app.get("/")
 def root():
