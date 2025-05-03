@@ -18,6 +18,8 @@ export default function Cart() {
   const [cartItems, setCartItems] = useState<CartItem[]>(cart);
 
   useEffect(() => {
+    console.log("Session: ",session)
+    
     if (session?.user?.email) {
       setIsLoggedIn(true);
       const cartKey = `cart_${session?.user?.email}`;
