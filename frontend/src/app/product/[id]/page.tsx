@@ -31,16 +31,19 @@ export default function ProductPage() {
       return;
     }
 
-    console.log(
-      "Product added to cart:",
-      product?.id,
-      "by user:",
-      session?.user?.email
-    );
-    localStorage.setItem(
-      `cart_${product?.id}`,
-      JSON.stringify({ ...product, quantity })
-    );
+    const username = session.user?.email;
+    const cartKey = `cart_${username}`;
+    const existingCart = JSON.parse(localStorage.getItem(cartKey)) || "[]";
+
+    const existingProductsIndex = existingCart.findIndex((item:any)=> item.id === product?.id);
+
+    if(existingProductsIndex > -1){
+      existingCart[existingProductsIndex].quantity += quantity;
+    } else {
+      existingCart.push({...product, quantity });
+    }
+
+    localStorage.setItem(cartKey, JSON.stringify(existingCart));
     setIsLoading(true);
   };
 

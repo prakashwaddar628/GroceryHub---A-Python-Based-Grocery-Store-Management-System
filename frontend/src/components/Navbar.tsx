@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const handleSearch = () => {
     if (searchQuery) {
-      router.push(`/search?query=${searchQuery}`);
+      router.push(`/search?query=${searchQuery.trim()}`);
       setSearchQuery("");
     }
   };
@@ -73,6 +73,11 @@ export default function Navbar() {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e)=> setSearchQuery(e.target.value)  }
+          onKeyDown={(e)=>{
+            if (e.key === 'Enter') {
+              handleSearch();
+            }
+          }}
         />
         <button className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none rounded-r-full cursor-pointer" onClick={handleSearch}>
           <MdSearch size={30} />
