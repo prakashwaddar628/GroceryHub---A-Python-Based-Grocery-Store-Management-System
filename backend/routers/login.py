@@ -39,10 +39,12 @@ async def login(data: LoginRequest):
         if user and bcrypt.verify(data.password, user["password"]):
             token_data = {
                 "sub": user["username"],
-                "user_id": str(user["_id"])
+                "user_id": str(user["_id"]),
+                "role": user.get("role", "user")
             }
+
             token = create_access_token(data=token_data, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-            return {"token": token}
+            return {"token": token, "role": user.get("role", "user")}
 
         raise HTTPException(status_code=401, detail="Incorrect username or password")
     except Exception as e:
