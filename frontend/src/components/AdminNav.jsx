@@ -1,18 +1,16 @@
 'use client';
 
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function AdminNav() {
     const router = useRouter();
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {logout} = useAuth();
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        localStorage.removeItem('token');
-        router.push('/login');
+      logout()
+      router.push('/login');
     };
     
   return (

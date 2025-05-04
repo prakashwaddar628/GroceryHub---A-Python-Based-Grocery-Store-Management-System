@@ -68,7 +68,6 @@ export default function SignUp() {
 
         toast.success("Sign Up Successful!");
 
-        // Optional: Store token if returned
         if (data.token) {
           localStorage.setItem("authToken", data.token);
         }
@@ -77,7 +76,9 @@ export default function SignUp() {
         setUsername("");
         setPassword("");
         setCnfPassword("");
-        router.push("/login");
+        setTimeout(()=>{
+          router.push("/login");
+        },1500)
       } catch (error: any) {
         setError(error.message || "An error occurred.");
         toast.error(error.message || "An error occurred.");

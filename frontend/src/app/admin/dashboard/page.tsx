@@ -23,6 +23,7 @@ import {
     LineChart,
     Line,
 } from 'recharts';
+import Layout from '@/components/Layout';
 
 // Dummy data for the charts
 const userChartData = [
@@ -54,7 +55,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
 const AdminDashboard = () => {
     return (
-        <div className="flex max-h-screen">
+        <div className='flex max-w-screen'>
             <div className="flex-1 py-2 px-8 text-gray-800 overflow-y-hidden">
                 <div>
                     <div>

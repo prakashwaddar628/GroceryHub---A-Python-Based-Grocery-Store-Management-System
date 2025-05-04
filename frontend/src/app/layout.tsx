@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SessionWrapper from "@/components/SessionWrapper";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Grocery hub",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionWrapper>{children}</SessionWrapper>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

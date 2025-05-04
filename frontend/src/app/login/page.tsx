@@ -26,14 +26,9 @@ export default function Login() {
       return;
     }
 
-    if (username === "admin" && password === "admin"){
-      router.push("/admin");
-      toast.success("going to admin dashboard...");
-      return;
-    }
 
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,8 +38,13 @@ export default function Login() {
 
       const data = await res.json();
 
+      if (data.role === "admin") {
+        router.push("/admin");
+      }
+      
       if (res.ok) {
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("role", data.role);
         toast.success("Login Successful!");
         setUsername("");
         setPassword("");
@@ -104,7 +104,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full rounded-full border border-gray-300 px-3 py-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
               />
-              <button onClick={()=>setShowPassword(!showPassword)} className="text-sm">
+              <button type="button" onClick={()=>setShowPassword(!showPassword)} className="text-sm">
                 {showPassword?"Hide":"Show"}
               </button>
             </div>

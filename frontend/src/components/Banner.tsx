@@ -1,13 +1,18 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface BannerProps {
-  items: { name: string; describe: string; image: string; buttonText: string }[];
+  items: {
+    name: string;
+    describe: string;
+    image: string;
+    buttonText: string;
+  }[];
 }
 
-export default function Banner({items}: BannerProps) {
+export default function Banner({ items }: BannerProps) {
   const router = useRouter();
 
   return (
@@ -19,17 +24,26 @@ export default function Banner({items}: BannerProps) {
             className="bg-white rounded-md shadow-md flex-shrink-0 w-80 md:w-full p-2 relative"
           >
             <div className="relative w-full h-46 rounded-md overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.name}
-                layout="fill"
-                objectFit="cover"
-                className="object-cover"
-              />
+              <div className="relative w-full h-60">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
               <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-end items-center p-4 bg-opacity-60 text-white">
-                <div className="text-4xl text-shadow text-shadow-yellow-300 font-bold mb-2">{item.name}</div>
-                <div className="text-amber-600 font-bold font-serif text-shadow-amber-500 mb-4 text-6xl md:text-4xl">{item.describe}</div>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm md:text-base cursor-pointer" onClick={()=> router.push('/products')}>
+                <div className="text-4xl text-shadow text-shadow-yellow-300 font-bold mb-2">
+                  {item.name}
+                </div>
+                <div className="text-amber-600 font-bold font-serif text-shadow-amber-500 mb-4 text-6xl md:text-4xl">
+                  {item.describe}
+                </div>
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm md:text-base cursor-pointer"
+                  onClick={() => router.push("/products")}
+                >
                   {item.buttonText}
                 </button>
               </div>

@@ -1,79 +1,64 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Image from "next/image";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
 import { CartItem } from "@/types/cart";
-import cart from "@/data/cartData.json";
-
-import { useSession } from "next-auth/react";
-
+import toast from "react-hot-toast";
+import  useAuth  from "@/hooks/useAuth";
 
 export default function Cart() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { user, isAuthenticated } = useAuth();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>(cart);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const cartKey = `cart_${user?.email || "guest"}`;
 
+  // Load cart from localStorage
   useEffect(() => {
-    
-    if (session?.user?.email) {
-      setIsLoggedIn(true);
-      const cartKey = `cart_${session?.user?.email}`;
-      const userData = JSON.parse(localStorage.getItem(cartKey) || "[]");
-      setCartItems(userData);
+    if (typeof window !== "undefined" && isAuthenticated) {
+      const storedCart = localStorage.getItem(cartKey);
+      setCartItems(storedCart ? JSON.parse(storedCart) : []);
     } else {
-      setIsLoggedIn(false);
       setCartItems([]);
     }
-  }, [session]);
+  }, [isAuthenticated, user]);
 
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  // Persist cart to localStorage on update
+  useEffect(() => {
+    if (typeof window !== "undefined" && isAuthenticated) {
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    }
+  }, [cartItems, isAuthenticated, user]);
+
+  const updateCartItemQuantity = useCallback((id: string, quantity: number) => {
+    if (quantity < 1) return;
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  }, []);
+
+  const removeItem = useCallback((id: string) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    toast.success("Item removed");
+  }, []);
+
+  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const discount = Math.floor(total * 0.2);
   const delivery = total > 1000 ? 0 : 40;
   const finalAmount = total - discount + delivery;
-
-  const updateCartItemQuantity = (id: string, quantity: number) => {
-    if (quantity < 1) return;
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      );
-      if (session?.user?.email){
-        localStorage.setItem(`cart_${session?.user?.email}`, JSON.stringify(updatedItems));
-      }
-      return updatedItems;
-    });
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id!== id);
-      if (session?.user?.email){
-        localStorage.setItem(`cart_${session?.user?.email}`, JSON.stringify(updatedItems));
-      }
-      return updatedItems;
-    });
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="px-4 py-6 md:px-12">
         <h1 className="text-2xl text-blue-700 font-bold mb-6">
-          My Cart{" "}
-          <span className="text-gray-600 text-base">
-            ({cartItems.length} items)
-          </span>
+          My Cart <span className="text-gray-600 text-base">({cartItems.length} items)</span>
         </h1>
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 bg-white">
+          <div className="flex flex-col items-center justify-center py-16 bg-white rounded-2xl">
             <Image
               src="/images/empty-cart.svg"
               alt="Empty Cart"
@@ -81,25 +66,23 @@ export default function Cart() {
               height={300}
             />
             <h2 className="text-gray-700 text-xl mt-4 text-center">
-              {isLoggedIn
+              {isAuthenticated
                 ? "Your cart is empty. Add items to continue shopping."
                 : "Please log in to view your cart."}
             </h2>
             <button
               className="mt-6 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
-              onClick={() => router.push(isLoggedIn ? "/" : "/login")}
+              onClick={() => router.push(isAuthenticated ? "/" : "/login")}
             >
-              {isLoggedIn ? "Continue Shopping" : "Login"}
+              {isAuthenticated ? "Continue Shopping" : "Login"}
             </button>
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Left Section - Items */}
+            {/* Left: Cart Items */}
             <div className="flex-1 bg-white p-6 rounded-3xl shadow-lg">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="font-semibold text-gray-800">
-                  From Saved Address
-                </h2>
+                <h2 className="font-semibold text-gray-800">From Saved Address</h2>
                 <button className="text-blue-600 border border-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-white transition">
                   Enter Delivery Pincode
                 </button>
@@ -112,18 +95,20 @@ export default function Cart() {
                 >
                   <div className="flex flex-col items-center">
                     <Image
-                      src={item.image}
+                      src={item.image || "/images/fallback.png"}
                       alt={item.name}
                       width={120}
                       height={120}
                       className="rounded-xl"
+                      onError={(e) =>
+                        (e.currentTarget.src = "/images/fallback.png")
+                      }
                     />
                     <div className="flex items-center gap-2 mt-2">
                       <button
-                        onClick={() =>
-                          updateCartItemQuantity(item.id, item.quantity - 1)
-                        }
-                        className="text-blue-600 border border-blue-600 px-3 py-1 rounded-full hover:text-white hover:bg-blue-600 transition"
+                        aria-label="Decrease quantity"
+                        onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}
+                        className="text-blue-600 border border-blue-600 px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white"
                       >
                         -
                       </button>
@@ -131,10 +116,9 @@ export default function Cart() {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() =>
-                          updateCartItemQuantity(item.id, item.quantity + 1)
-                        }
-                        className="text-blue-600 border border-blue-600 px-3 py-1 rounded-full hover:text-white hover:bg-blue-600 transition"
+                        aria-label="Increase quantity"
+                        onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
+                        className="text-blue-600 border border-blue-600 px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white"
                       >
                         +
                       </button>
@@ -146,9 +130,7 @@ export default function Cart() {
                       <h3 className="text-lg font-semibold text-gray-900">
                         {item.name}
                       </h3>
-                      <p className="text-sm text-gray-600">
-                        Seller: SuperComNet
-                      </p>
+                      <p className="text-sm text-gray-600">Seller: SuperComNet</p>
                       <div className="flex gap-3 mt-2 items-center">
                         <span className="text-lg font-bold text-gray-800">
                           ₹{item.price}
@@ -192,7 +174,7 @@ export default function Cart() {
               </div>
             </div>
 
-            {/* Right Section - Price Details */}
+            {/* Right: Price Summary */}
             <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-lg h-fit">
               <h2 className="text-lg font-semibold mb-4 text-gray-800">
                 PRICE DETAILS
